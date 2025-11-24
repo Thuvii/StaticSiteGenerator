@@ -1,5 +1,5 @@
 import unittest
-from src.markdown_block import markdown_to_html_node
+from src.markdown_block import markdown_to_html_node, extract_title
 
 class TestMarkDownToHTMLNode(unittest.TestCase):
     def test_paragraphs(self):
@@ -96,5 +96,27 @@ the **same** even with inline stuff
             html,
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
+    def test_extract_title(self):
+        md ="""
+# Tolkien Fan Club
+
+![JRR Tolkien sitting](/images/tolkien.png)
+
+Here's the deal, **I like Tolkien**.
+"""     
+        title = extract_title(md)
+        self.assertEqual(title,"Tolkien Fan Club")
+    
+    def test_extract_title2(self):
+        md = """
+##Tolkien Fan Club
+
+![JRR Tolkien sitting](/images/tolkien.png)
+
+Here's the deal, **I like Tolkien**.
+"""
+        self.assertRaises(Exception, extract_title, md)
+
+
 if __name__ == "__main__":
     unittest.main()

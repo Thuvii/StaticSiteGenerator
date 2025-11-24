@@ -1,1 +1,1 @@
-python3 main.py "/Thuvii/" 
+python3 main.py "/StaticSiteGenerator/" 

@@ -6,17 +6,22 @@ from src.copy_static import *
 from src.generate_page import *
 import re
 import os
+import sys
 from pathlib import Path
 
 path_content = "./content/"
-path_public = "./public/"
+path_public = "./docs/"
 static_path = "./static"
-path_public = "./public"
+
 def main():
-    if os.path.exists(static_path):
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
+    if os.path.exists(path_public):
         shutil.rmtree(path_public)
-    copy_folder("./static","./public")
-    generate_page_recursive(path_content,"template.html",path_public)
+    copy_folder("./static","./docs")
+    generate_page_recursive(path_content,"template.html",path_public,basepath)
     # print(os.listdir(path_content))
  
 
